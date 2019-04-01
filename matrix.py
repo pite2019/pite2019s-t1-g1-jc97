@@ -15,9 +15,9 @@ class Matrix:
 		self.__columns = columns
 		self.__matrix = []
 		for i in range(0, columns):
-			self.__matrix[i] = []
+			self.__matrix.append([])
 			for j in range(0, lines):
-				self.__matrix[i][j] = 0
+				self.__matrix[i].append(0)
 
 	@property
 	def lines(self):
@@ -42,16 +42,43 @@ class Matrix:
 					raise ValueError()
 		self.__matrix = values
 
-	def addMatrix(self, matrix):
-		if not isinstance(matrix, Matrix) or matrix.__lines != self.__lines or matrix.__columns != self.__columns:
+	def addMatrix(self, summand):
+		if not isinstance(summand, Matrix) or summand.__lines != self.__lines or summand.__columns != self.__columns:
 			raise ValueError()
 		for i in range(0, self.__columns):
 			for j in range(0, self.__lines):
-				self.__matrix[i][j] = matrix[i][j]
+				self.__matrix[i][j] += summand.__matrix[i][j]
+
+	def substractMatrix(self, subtrahend):
+		if not isinstance(subtrahend, Matrix) or subtrahend.__lines != self.__lines or subtrahend.__columns != self.__columns:
+			raise ValueError()
+		for i in range(0, self.__columns):
+			for j in range(0, self.__lines):
+				self.__matrix[i][j] += subtrahend.__matrix[i][j]
+
+	def __add__(self, summand):
+		if not isinstance(summand, Matrix) or summand.__lines != self.__lines or summand.__columns != self.__columns:
+			raise ValueError()
+		result = Matrix(self.__lines, self.__columns)
+		for i in range(0, self.__columns):
+			for j in range(0, self.__lines):
+				result.__matrix[i][j] = summand.__matrix[i][j] + self.__matrix[i][j]
+		return result
+
+
+	def __sub__(self, subtrahend):
+		if not isinstance(subtrahend, Matrix) or subtrahend.__lines != self.__lines or subtrahend.__columns != self.__columns:
+			raise ValueError()
+		result = Matrix(self.__lines, self.__columns)
+		for i in range(0, self.__columns):
+			for j in range(0, self.__lines):
+				result.__matrix[i][j] = self.__matrix[i][j] - subtrahend.__matrix[i][j]
+		return result
+
 	
 	def printMatrix(self):
 		for j in range(0, self.__lines):
 			for i in range(0, self.__columns):
-				print(str(self.__matrix[i][j]) + " ")
-			print("\n")
+				print(str(self.__matrix[i][j]) + " ", end = '')
+			print("\n", end = '')
 

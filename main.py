@@ -39,3 +39,14 @@ print("")
 x = 2
 x @= matrixA
 x.print_matrix()
+
+print("")
+print("Test vectors:")
+print("")
+
+vectorA = Matrix(1, 4)
+vectorA.set_values([[2, 3, 4, 5]])
+vectorB = Matrix(4, 1)
+vectorB.set_values([[3], [4], [5], [6]])
+
+(vectorB @ vectorA).print_matrix()

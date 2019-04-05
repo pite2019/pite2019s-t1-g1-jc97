@@ -9,7 +9,7 @@ class Matrix:
 	__matrix = ...  # type: List[List[int]]
 
 	def __init__(self, lines, columns):
-		if not isinstance(lines, int) or lines < 2 or not isinstance(columns, int) or columns < 2:
+		if not isinstance(lines, int) or lines < 1 or not isinstance(columns, int) or columns < 1:
 			raise ValueError()
 		self.__lines = lines
 		self.__columns = columns

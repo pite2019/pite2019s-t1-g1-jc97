@@ -82,6 +82,38 @@ class Matrix:
 	def __rsub__(self, other):
 		return self.__sub__(other, True)
 
+	def multiply(self, multiplicand):
+		if isinstance(multiplicand, int) or isinstance(multiplicand, float):
+			result = Matrix(self.__lines, self.__columns)
+			for i in range(self.__lines):
+				for j in range(self.__columns):
+					result.__matrix[i][j] = self.__matrix[i][j] * multiplicand
+			return result
+		elif not isinstance(multiplicand, Matrix) or multiplicand.__lines != self.__columns:
+			raise ValueError()
+		result = Matrix(self.__lines, multiplicand.__columns)
+		for i in range(result.__lines):
+			for j in range(result.__columns):
+				value = 0
+				for k in range(self.__columns):
+					value += self.__matrix[i][k] * multiplicand.__matrix[k][j]
+				result.__matrix[i][j] = value
+		return result
+
+	def __matmul__(self, other):
+		return self.multiply(other)
+
+	def __imatmul__(self, other):
+		return self.multiply(other)
+
+	def __rmatmul__(self, other):
+		if isinstance(other, int) or isinstance(other, float):
+			return self.multiply(other)
+		elif isinstance(other, Matrix):
+			return other.multiply(self)
+		else:
+			raise ValueError()
+
 	def print_matrix(self):
 		for i in range(0, self.__lines):
 			for j in range(0, self.__columns):
